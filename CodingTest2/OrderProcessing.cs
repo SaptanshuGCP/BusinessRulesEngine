@@ -250,4 +250,16 @@ namespace CodingTest2
             RulesProcessed = order.ProcessPaymentRules();
         }
     }
+
+    public class ProcessVideoOrder : IOrder
+    {
+        List<IRule> _rules = new List<IRule>();
+        public List<String> RulesProcessed { get; set; }
+        public void ProcessOrder()
+        {
+            _rules.Add(new AddVideoRule());
+            OrderPayment order = new OrderPayment(_rules);
+            RulesProcessed = order.ProcessPaymentRules();
+        }
+    }
 }
