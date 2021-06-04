@@ -159,6 +159,25 @@ namespace CodingTest2
         }
     }
 
+    public class AddVideoRule : IRule
+    {
+        public bool IsRuleProcessed { get; set; }
+        public string RuleName { get; set; }
+        public void ProcessRule()
+        {
+            try
+            {
+                Console.WriteLine("First Aid Video added to the packing slip.");
+                RuleName = Rules.ADD_VIDEO.ToString();
+                IsRuleProcessed = true;
+            }
+            catch
+            {
+                IsRuleProcessed = false;
+            }
+        }
+    }
+
     public class OrderPayment
     {
         List<IRule> _ruleList;
