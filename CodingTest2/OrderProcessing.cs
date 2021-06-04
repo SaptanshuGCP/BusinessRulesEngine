@@ -3,27 +3,40 @@ using System.Collections.Generic;
 
 namespace CodingTest2
 {
+    public enum Rules
+    {
+        GEN_PKG_SLIP,
+        GEN_DUP_PKG_SLIP,
+        COMM_PAYMENT,
+        ACT_MEMBERSHIP,
+        UPGRD_MEMBERSHIP,
+        EMAIL_OWNER,
+        ADD_VIDEO
+    }
 
     public interface IOrder
     {
-        bool RulesProcessed { get; set; }
+        List<String> RulesProcessed { get; set; }
         void ProcessOrder();
     }
 
     public interface IRule
     {
         bool IsRuleProcessed { get; set; }
+        string RuleName { get; set; }
         void ProcessRule();
     }
 
     public class GeneratePackingSlip : IRule
     {
         public bool IsRuleProcessed { get; set; }
+        public string RuleName { get; set; }
         public void ProcessRule()
         {
             try
             {
                 Console.WriteLine("Packing slip generated.");
+                RuleName = Rules.GEN_PKG_SLIP.ToString();
                 IsRuleProcessed = true;
             }
             catch
@@ -37,11 +50,13 @@ namespace CodingTest2
     {
 
         public bool IsRuleProcessed { get; set; }
+        public string RuleName { get; set; }
         public void ProcessRule()
         {
             try
             {
                 Console.WriteLine("Duplicate Packing slip generated.");
+                RuleName = Rules.GEN_DUP_PKG_SLIP.ToString();
                 IsRuleProcessed = true;
             }
             catch
@@ -54,11 +69,13 @@ namespace CodingTest2
     public class CommissionPayment : IRule
     {
         public bool IsRuleProcessed { get; set; }
+        public string RuleName { get; set; }
         public void ProcessRule()
         {
             try
             {
                 Console.WriteLine("Commission payment generated.");
+                RuleName = Rules.COMM_PAYMENT.ToString();
                 IsRuleProcessed = true;
             }
             catch
@@ -72,11 +89,13 @@ namespace CodingTest2
     {
 
         public bool IsRuleProcessed { get; set; }
+        public string RuleName { get; set; }
         public void ProcessRule()
         {
             try
             {
                 Console.WriteLine("Membership activated.");
+                RuleName = Rules.ACT_MEMBERSHIP.ToString();
                 IsRuleProcessed = true;
             }
             catch
@@ -89,11 +108,13 @@ namespace CodingTest2
     public class EmailOwner : IRule
     {
         public bool IsRuleProcessed { get; set; }
+        public string RuleName { get; set; }
         public void ProcessRule()
         {
             try
             {
                 Console.WriteLine("Email sent.");
+                RuleName = Rules.EMAIL_OWNER.ToString();
                 IsRuleProcessed = true;
             }
             catch
@@ -110,24 +131,25 @@ namespace CodingTest2
         {
             _ruleList = rules;
         }
-        public bool ProcessPaymentRules()
+        public List<String> ProcessPaymentRules()
         {
+            List<string> rulesProcessed = new List<string>();
             foreach (IRule rule in _ruleList)
             {
                 rule.ProcessRule();
-                if (!rule.IsRuleProcessed)
+                if (rule.IsRuleProcessed)
                 {
-                    return false;
+                    rulesProcessed.Add(rule.RuleName);
                 }
             }
-            return true;
+            return rulesProcessed;
         }
     }
 
     public class PhysicalProductOrder : IOrder
     {
         List<IRule> _rules = new List<IRule>();
-        public bool RulesProcessed { get; set; }
+        public List<String> RulesProcessed { get; set; }
         public void ProcessOrder()
         {
             _rules.Add(new GeneratePackingSlip());
@@ -140,7 +162,7 @@ namespace CodingTest2
     public class BookOrder : IOrder
     {
         List<IRule> _rules = new List<IRule>();
-        public bool RulesProcessed { get; set; }
+        public List<String> RulesProcessed { get; set; }
         public void ProcessOrder()
         {
             _rules.Add(new GenerateDuplicatePackingSlip());
@@ -153,7 +175,7 @@ namespace CodingTest2
     public class MembershipOrder : IOrder
     {
         List<IRule> _rules = new List<IRule>();
-        public bool RulesProcessed { get; set; }
+        public List<String> RulesProcessed { get; set; }
         public void ProcessOrder()
         {
             _rules.Add(new ActivateMembership());
