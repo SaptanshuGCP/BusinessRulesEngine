@@ -43,7 +43,7 @@ namespace CodingTest2
         void ProcessRule();
     }
 
-    public class GeneratePackingSlip : IRule
+    public class GeneratePackingSlipRule : IRule
     {
         public bool IsRuleProcessed { get; set; }
         public string RuleName { get; set; }
@@ -62,7 +62,7 @@ namespace CodingTest2
         }
     }
 
-    public class GenerateDuplicatePackingSlip : IRule
+    public class GenerateDupPkgSlipRule : IRule
     {
 
         public bool IsRuleProcessed { get; set; }
@@ -82,7 +82,7 @@ namespace CodingTest2
         }
     }
 
-    public class CommissionPayment : IRule
+    public class CommissionPaymentRule : IRule
     {
         public bool IsRuleProcessed { get; set; }
         public string RuleName { get; set; }
@@ -101,7 +101,7 @@ namespace CodingTest2
         }
     }
 
-    public class ActivateMembership : IRule
+    public class ActivateMembershipRule : IRule
     {
 
         public bool IsRuleProcessed { get; set; }
@@ -121,7 +121,7 @@ namespace CodingTest2
         }
     }
 
-    public class UpgradeMembership : IRule
+    public class UpgradeMembershipRule : IRule
     {
         public bool IsRuleProcessed { get; set; }
         public string RuleName { get; set; }
@@ -140,7 +140,7 @@ namespace CodingTest2
         }
     }
 
-    public class EmailOwner : IRule
+    public class EmailOwnerRule : IRule
     {
         public bool IsRuleProcessed { get; set; }
         public string RuleName { get; set; }
@@ -187,8 +187,8 @@ namespace CodingTest2
         public List<String> RulesProcessed { get; set; }
         public void ProcessOrder()
         {
-            _rules.Add(new GeneratePackingSlip());
-            _rules.Add(new CommissionPayment());
+            _rules.Add(new GeneratePackingSlipRule());
+            _rules.Add(new CommissionPaymentRule());
             OrderPayment order = new OrderPayment(_rules);
             RulesProcessed = order.ProcessPaymentRules();
         }
@@ -200,8 +200,8 @@ namespace CodingTest2
         public List<String> RulesProcessed { get; set; }
         public void ProcessOrder()
         {
-            _rules.Add(new GenerateDuplicatePackingSlip());
-            _rules.Add(new CommissionPayment());
+            _rules.Add(new GenerateDupPkgSlipRule());
+            _rules.Add(new CommissionPaymentRule());
             OrderPayment order = new OrderPayment(_rules);
             RulesProcessed = order.ProcessPaymentRules();
         }
@@ -213,8 +213,20 @@ namespace CodingTest2
         public List<String> RulesProcessed { get; set; }
         public void ProcessOrder()
         {
-            _rules.Add(new ActivateMembership());
-            _rules.Add(new EmailOwner());
+            _rules.Add(new ActivateMembershipRule());
+            _rules.Add(new EmailOwnerRule());
+            OrderPayment order = new OrderPayment(_rules);
+            RulesProcessed = order.ProcessPaymentRules();
+        }
+    }
+    public class UpgradeMembershipOrder : IOrder
+    {
+        List<IRule> _rules = new List<IRule>();
+        public List<String> RulesProcessed { get; set; }
+        public void ProcessOrder()
+        {
+            _rules.Add(new UpgradeMembershipRule());
+            _rules.Add(new EmailOwnerRule());
             OrderPayment order = new OrderPayment(_rules);
             RulesProcessed = order.ProcessPaymentRules();
         }
