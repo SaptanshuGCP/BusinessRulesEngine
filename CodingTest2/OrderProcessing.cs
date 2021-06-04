@@ -6,29 +6,65 @@ namespace CodingTest2
 
     public interface IOrder
     {
-        bool ProcessOrder();
+        bool RulesProcessed { get; set; }
+        void ProcessOrder();
     }
 
     public interface IRule
     {
-        bool ProcessRule();
+        bool IsRuleProcessed { get; set; }
+        void ProcessRule();
     }
 
     public class GeneratePackingSlip : IRule
     {
-        public bool ProcessRule()
+        public bool IsRuleProcessed { get; set; }
+        public void ProcessRule()
         {
-            Console.WriteLine("Packing slip generated.");
-            return true;
+            try
+            {
+                Console.WriteLine("Packing slip generated.");
+                IsRuleProcessed = true;
+            }
+            catch
+            {
+                IsRuleProcessed = false;
+            }
+        }
+    }
+
+    public class GenerateDuplicatePackingSlip : IRule
+    {
+
+        public bool IsRuleProcessed { get; set; }
+        public void ProcessRule()
+        {
+            try
+            {
+                Console.WriteLine("Duplicate Packing slip generated.");
+                IsRuleProcessed = true;
+            }
+            catch
+            {
+                IsRuleProcessed = false;
+            }
         }
     }
 
     public class CommissionPayment : IRule
     {
-        public bool ProcessRule()
+        public bool IsRuleProcessed { get; set; }
+        public void ProcessRule()
         {
-            Console.WriteLine("Commission payment generated.");
-            return true;
+            try
+            {
+                Console.WriteLine("Commission payment generated.");
+                IsRuleProcessed = true;
+            }
+            catch
+            {
+                IsRuleProcessed = false;
+            }
         }
     }
 
@@ -37,15 +73,14 @@ namespace CodingTest2
         List<IRule> _ruleList;
         public OrderPayment(List<IRule> rules)
         {
-            rules = _ruleList;
+            _ruleList = rules;
         }
         public bool ProcessPaymentRules()
         {
-            bool ruleProcessed = false;
             foreach (IRule rule in _ruleList)
             {
-                ruleProcessed = rule.ProcessRule();
-                if (!ruleProcessed)
+                rule.ProcessRule();
+                if (!rule.IsRuleProcessed)
                 {
                     return false;
                 }
@@ -54,33 +89,29 @@ namespace CodingTest2
         }
     }
 
-    public class PhysicalOrder : IOrder
+    public class PhysicalProductOrder : IOrder
     {
         List<IRule> _rules = new List<IRule>();
-        public bool ProcessOrder()
+        public bool RulesProcessed { get; set; }
+        public void ProcessOrder()
         {
             _rules.Add(new GeneratePackingSlip());
             _rules.Add(new CommissionPayment());
             OrderPayment order = new OrderPayment(_rules);
-            return order.ProcessPaymentRules();
+            RulesProcessed = order.ProcessPaymentRules();
         }
     }
 
     public class BookOrder : IOrder
     {
-        public List<IRule> rules { get; set; }
-        public bool ProcessOrder()
+        List<IRule> _rules = new List<IRule>();
+        public bool RulesProcessed { get; set; }
+        public void ProcessOrder()
         {
-            bool ruleProcessed = false;
-            foreach (IRule rule in rules)
-            {
-                ruleProcessed = rule.ProcessRule();
-                if (!ruleProcessed)
-                {
-                    return false;
-                }
-            }
-            return true;
+            _rules.Add(new GenerateDuplicatePackingSlip());
+            _rules.Add(new CommissionPayment());
+            OrderPayment order = new OrderPayment(_rules);
+            RulesProcessed = order.ProcessPaymentRules();
         }
     }
 }

@@ -8,19 +8,17 @@ namespace CodingTest2
         [TestMethod]
         public void ProcessPhysical()
         {
-            PhysicalOrder orderProcess = new PhysicalOrder();
-            bool expectedResult = true;
-            bool actualResult = orderProcess.ProcessOrder();
-            Assert.IsTrue(expectedResult == actualResult);
+            PhysicalProductOrder physicalProduct = new PhysicalProductOrder();
+            physicalProduct.ProcessOrder();
+            Assert.IsTrue(physicalProduct.RulesProcessed, "Payment for physical product processed.");
         }
 
         [TestMethod]
         public void ProcessBook()
         {
             BookOrder orderProcess = new BookOrder();
-            bool expectedResult = true;
-            bool actualResult = orderProcess.ProcessOrder();
-            Assert.IsTrue(expectedResult == actualResult);
+            orderProcess.ProcessOrder();
+            Assert.IsTrue(orderProcess.RulesProcessed, "Physical for Book processed.");
         }
 
         [TestMethod]
