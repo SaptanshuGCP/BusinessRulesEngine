@@ -121,6 +121,25 @@ namespace CodingTest2
         }
     }
 
+    public class UpgradeMembership : IRule
+    {
+        public bool IsRuleProcessed { get; set; }
+        public string RuleName { get; set; }
+        public void ProcessRule()
+        {
+            try
+            {
+                Console.WriteLine("Email sent.");
+                RuleName = Rules.UPGRD_MEMBERSHIP.ToString();
+                IsRuleProcessed = true;
+            }
+            catch
+            {
+                IsRuleProcessed = false;
+            }
+        }
+    }
+
     public class EmailOwner : IRule
     {
         public bool IsRuleProcessed { get; set; }
