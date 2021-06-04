@@ -68,6 +68,41 @@ namespace CodingTest2
         }
     }
 
+    public class ActivateMembership : IRule
+    {
+
+        public bool IsRuleProcessed { get; set; }
+        public void ProcessRule()
+        {
+            try
+            {
+                Console.WriteLine("Membership activated.");
+                IsRuleProcessed = true;
+            }
+            catch
+            {
+                IsRuleProcessed = false;
+            }
+        }
+    }
+
+    public class EmailOwner : IRule
+    {
+        public bool IsRuleProcessed { get; set; }
+        public void ProcessRule()
+        {
+            try
+            {
+                Console.WriteLine("Email sent.");
+                IsRuleProcessed = true;
+            }
+            catch
+            {
+                IsRuleProcessed = false;
+            }
+        }
+    }
+
     public class OrderPayment
     {
         List<IRule> _ruleList;
@@ -110,6 +145,19 @@ namespace CodingTest2
         {
             _rules.Add(new GenerateDuplicatePackingSlip());
             _rules.Add(new CommissionPayment());
+            OrderPayment order = new OrderPayment(_rules);
+            RulesProcessed = order.ProcessPaymentRules();
+        }
+    }
+
+    public class MembershipOrder : IOrder
+    {
+        List<IRule> _rules = new List<IRule>();
+        public bool RulesProcessed { get; set; }
+        public void ProcessOrder()
+        {
+            _rules.Add(new ActivateMembership());
+            _rules.Add(new EmailOwner());
             OrderPayment order = new OrderPayment(_rules);
             RulesProcessed = order.ProcessPaymentRules();
         }

@@ -18,13 +18,15 @@ namespace CodingTest2
         {
             BookOrder orderProcess = new BookOrder();
             orderProcess.ProcessOrder();
-            Assert.IsTrue(orderProcess.RulesProcessed, "Physical for Book processed.");
+            Assert.IsTrue(orderProcess.RulesProcessed, "Payment for Book processed.");
         }
 
         [TestMethod]
         public void ProcessMembership()
         {
-            
+            MembershipOrder orderProcess = new MembershipOrder();
+            orderProcess.ProcessOrder();
+            Assert.IsTrue(orderProcess.RulesProcessed, "Membership activated.");
         }
 
         [TestMethod]
