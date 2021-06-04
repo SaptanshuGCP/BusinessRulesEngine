@@ -54,7 +54,11 @@ namespace CodingTest2
         [TestMethod]
         public void ProcessVideo()
         {
-            
+            IOrder videoOrder = new ProcessVideoOrder();
+            OrderProcessing orderProcess = new OrderProcessing(videoOrder);
+            List<String> rulesProcessed = orderProcess.ProcessOrder();
+            bool correctRulesExecuted = rulesProcessed.Contains(Rules.ADD_VIDEO.ToString());
+            Assert.IsTrue(correctRulesExecuted, "Video succesfully added.");
         }
     }
 }
