@@ -1,4 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
 
 namespace CodingTest2
 {
@@ -8,30 +10,33 @@ namespace CodingTest2
         [TestMethod]
         public void ProcessPhysical()
         {
-            PhysicalProductOrder physicalProduct = new PhysicalProductOrder();
-            physicalProduct.ProcessOrder();
-            bool correctRulesExecuted = physicalProduct.RulesProcessed.Contains(Rules.GEN_PKG_SLIP.ToString()) &&
-                physicalProduct.RulesProcessed.Contains(Rules.COMM_PAYMENT.ToString());
+            IOrder physicalProduct = new PhysicalProductOrder();
+            OrderProcessing orderProcess = new OrderProcessing(physicalProduct);
+            List<String> rulesProcessed = orderProcess.ProcessOrder();
+            bool correctRulesExecuted = rulesProcessed.Contains(Rules.GEN_PKG_SLIP.ToString()) &&
+                rulesProcessed.Contains(Rules.COMM_PAYMENT.ToString());
             Assert.IsTrue(correctRulesExecuted, "Payment for physical product processed.");
         }
 
         [TestMethod]
         public void ProcessBook()
         {
-            BookOrder bookOrder = new BookOrder();
-            bookOrder.ProcessOrder();
-            bool correctRulesExecuted = bookOrder.RulesProcessed.Contains(Rules.GEN_DUP_PKG_SLIP.ToString()) &&
-                bookOrder.RulesProcessed.Contains(Rules.COMM_PAYMENT.ToString());
+            IOrder bookOrder = new BookOrder();
+            OrderProcessing orderProcess = new OrderProcessing(bookOrder);
+            List<String> rulesProcessed = orderProcess.ProcessOrder();
+            bool correctRulesExecuted = rulesProcessed.Contains(Rules.GEN_DUP_PKG_SLIP.ToString()) &&
+                rulesProcessed.Contains(Rules.COMM_PAYMENT.ToString());
             Assert.IsTrue(correctRulesExecuted, "Payment for Book processed.");
         }
 
         [TestMethod]
         public void ProcessMembership()
         {
-            MembershipOrder memberOrder = new MembershipOrder();
-            memberOrder.ProcessOrder();
-            bool correctRulesExecuted = memberOrder.RulesProcessed.Contains(Rules.ACT_MEMBERSHIP.ToString()) &&
-                memberOrder.RulesProcessed.Contains(Rules.EMAIL_OWNER.ToString());
+            IOrder memberOrder = new MembershipOrder();
+            OrderProcessing orderProcess = new OrderProcessing(memberOrder);
+            List<String> rulesProcessed = orderProcess.ProcessOrder();
+            bool correctRulesExecuted = rulesProcessed.Contains(Rules.ACT_MEMBERSHIP.ToString()) &&
+                rulesProcessed.Contains(Rules.EMAIL_OWNER.ToString());
             Assert.IsTrue(correctRulesExecuted, "Membership activated.");
         }
 

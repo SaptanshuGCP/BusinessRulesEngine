@@ -3,6 +3,22 @@ using System.Collections.Generic;
 
 namespace CodingTest2
 {
+
+    public class OrderProcessing
+    {
+        IOrder _order;
+
+        public OrderProcessing(IOrder order)
+        {
+            _order = order;
+        }
+
+        public List<String> ProcessOrder()
+        {
+            _order.ProcessOrder();
+            return _order.RulesProcessed;
+        }
+    }
     public enum Rules
     {
         GEN_PKG_SLIP,
