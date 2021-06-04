@@ -43,7 +43,12 @@ namespace CodingTest2
         [TestMethod]
         public void ProcessMembershipUpgrade()
         {
-            
+            IOrder upgradeOrder = new UpgradeMembershipOrder();
+            OrderProcessing orderProcess = new OrderProcessing(upgradeOrder);
+            List<String> rulesProcessed = orderProcess.ProcessOrder();
+            bool correctRulesExecuted = rulesProcessed.Contains(Rules.UPGRD_MEMBERSHIP.ToString()) &&
+                rulesProcessed.Contains(Rules.EMAIL_OWNER.ToString());
+            Assert.IsTrue(correctRulesExecuted, "Membership updated and email sent.");
         }
 
         [TestMethod]

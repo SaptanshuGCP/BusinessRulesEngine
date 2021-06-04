@@ -129,7 +129,7 @@ namespace CodingTest2
         {
             try
             {
-                Console.WriteLine("Email sent.");
+                Console.WriteLine("Membership upgraded.");
                 RuleName = Rules.UPGRD_MEMBERSHIP.ToString();
                 IsRuleProcessed = true;
             }
