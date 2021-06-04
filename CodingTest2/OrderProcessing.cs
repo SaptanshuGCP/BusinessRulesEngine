@@ -38,143 +38,77 @@ namespace CodingTest2
 
     public interface IRule
     {
-        bool IsRuleProcessed { get; set; }
         string RuleName { get; set; }
         void ProcessRule();
     }
 
     public class GeneratePackingSlipRule : IRule
     {
-        public bool IsRuleProcessed { get; set; }
         public string RuleName { get; set; }
         public void ProcessRule()
         {
-            try
-            {
-                Console.WriteLine("Packing slip generated.");
-                RuleName = Rules.GEN_PKG_SLIP.ToString();
-                IsRuleProcessed = true;
-            }
-            catch
-            {
-                IsRuleProcessed = false;
-            }
+            Console.WriteLine("Packing slip generated.");
+            RuleName = Rules.GEN_PKG_SLIP.ToString();
         }
     }
 
     public class GenerateDupPkgSlipRule : IRule
     {
-
-        public bool IsRuleProcessed { get; set; }
         public string RuleName { get; set; }
         public void ProcessRule()
         {
-            try
-            {
-                Console.WriteLine("Duplicate Packing slip generated.");
-                RuleName = Rules.GEN_DUP_PKG_SLIP.ToString();
-                IsRuleProcessed = true;
-            }
-            catch
-            {
-                IsRuleProcessed = false;
-            }
+            Console.WriteLine("Duplicate Packing slip generated.");
+            RuleName = Rules.GEN_DUP_PKG_SLIP.ToString();
         }
     }
 
     public class CommissionPaymentRule : IRule
     {
-        public bool IsRuleProcessed { get; set; }
         public string RuleName { get; set; }
         public void ProcessRule()
         {
-            try
-            {
-                Console.WriteLine("Commission payment generated.");
-                RuleName = Rules.COMM_PAYMENT.ToString();
-                IsRuleProcessed = true;
-            }
-            catch
-            {
-                IsRuleProcessed = false;
-            }
+            Console.WriteLine("Commission payment generated.");
+            RuleName = Rules.COMM_PAYMENT.ToString();
         }
     }
 
     public class ActivateMembershipRule : IRule
     {
-
-        public bool IsRuleProcessed { get; set; }
         public string RuleName { get; set; }
         public void ProcessRule()
         {
-            try
-            {
-                Console.WriteLine("Membership activated.");
-                RuleName = Rules.ACT_MEMBERSHIP.ToString();
-                IsRuleProcessed = true;
-            }
-            catch
-            {
-                IsRuleProcessed = false;
-            }
+            Console.WriteLine("Membership activated.");
+            RuleName = Rules.ACT_MEMBERSHIP.ToString();
         }
     }
 
     public class UpgradeMembershipRule : IRule
     {
-        public bool IsRuleProcessed { get; set; }
         public string RuleName { get; set; }
         public void ProcessRule()
         {
-            try
-            {
-                Console.WriteLine("Membership upgraded.");
-                RuleName = Rules.UPGRD_MEMBERSHIP.ToString();
-                IsRuleProcessed = true;
-            }
-            catch
-            {
-                IsRuleProcessed = false;
-            }
+            Console.WriteLine("Membership upgraded.");
+            RuleName = Rules.UPGRD_MEMBERSHIP.ToString();
         }
     }
 
     public class EmailOwnerRule : IRule
     {
-        public bool IsRuleProcessed { get; set; }
         public string RuleName { get; set; }
         public void ProcessRule()
         {
-            try
-            {
-                Console.WriteLine("Email sent.");
-                RuleName = Rules.EMAIL_OWNER.ToString();
-                IsRuleProcessed = true;
-            }
-            catch
-            {
-                IsRuleProcessed = false;
-            }
+            Console.WriteLine("Email sent.");
+            RuleName = Rules.EMAIL_OWNER.ToString();
         }
     }
 
     public class AddVideoRule : IRule
     {
-        public bool IsRuleProcessed { get; set; }
         public string RuleName { get; set; }
         public void ProcessRule()
         {
-            try
-            {
-                Console.WriteLine("First Aid Video added to the packing slip.");
-                RuleName = Rules.ADD_VIDEO.ToString();
-                IsRuleProcessed = true;
-            }
-            catch
-            {
-                IsRuleProcessed = false;
-            }
+            Console.WriteLine("First Aid Video added to the packing slip.");
+            RuleName = Rules.ADD_VIDEO.ToString();
         }
     }
 
@@ -191,7 +125,7 @@ namespace CodingTest2
             foreach (IRule rule in _ruleList)
             {
                 rule.ProcessRule();
-                if (rule.IsRuleProcessed)
+                if (!String.IsNullOrEmpty(rule.RuleName))
                 {
                     rulesProcessed.Add(rule.RuleName);
                 }
