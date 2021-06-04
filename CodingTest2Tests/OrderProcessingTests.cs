@@ -17,7 +17,10 @@ namespace CodingTest2
         [TestMethod]
         public void ProcessBook()
         {
-            
+            BookOrder orderProcess = new BookOrder();
+            bool expectedResult = true;
+            bool actualResult = orderProcess.ProcessOrder();
+            Assert.IsTrue(expectedResult == actualResult);
         }
 
         [TestMethod]
